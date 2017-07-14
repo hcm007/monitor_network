@@ -4,24 +4,21 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
 TARGET = TableView
 TEMPLATE = app
 
-
 SOURCES += main.cpp\
-        tableview.cpp
-
+           tableview.cpp
 HEADERS  += tableview.h \
-    comeinhashmap.h \
-    goouthashmap.h \
-    hashmap.h \
-    port.h
+            comeinhashmap.h \
+            goouthashmap.h \
+            hashmap.h \
+            port.h
 
-FORMS    += tableview.ui
+FORMS += tableview.ui
 
 OTHER_FILES +=
 INCLUDEPATH += C:\Users\Administrator\Desktop\QTproject\Include
