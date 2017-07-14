@@ -1,8 +1,6 @@
 #include "tableview.h"
 #include "ui_tableview.h"
 #include<QTime>
-
-
 #include <pcap.h>
 #include <conio.h>
 #include"goouthashmap.h"
@@ -24,7 +22,6 @@ TableView::TableView(QWidget *parent) :
     ui(new Ui::TableView)
 {
     ui->setupUi(this);
-
 }
 
 TableView::~TableView()
@@ -33,72 +30,56 @@ TableView::~TableView()
 }
 void TableView::initializetablewidget()
 {
-
-       ui->tableWidget->setColumnCount(4);
-        QStringList m_Header;
-        m_Header<<QString("IP")<<QString("Port")<<QString("Application")<<QString("T/UDP");
-        ui->tableWidget->setHorizontalHeaderLabels(m_Header);
-        ui->tableWidget->setWindowTitle("network analyze");
-        connect(ui->closeButton,SIGNAL(clicked(bool)),this,SLOT(changejudge()));
-        connect(ui->closeButton,SIGNAL(clicked(bool)),this,SLOT(close()));
-        connect(ui->okButton,SIGNAL(clicked(bool)),this,SLOT(touchOkButton()));
-ui->online->setText(tr("Correct"));
-ui->normal->setText(tr("Correct"));
-
-
-
-
-        comeinfirstnode = initialize();
-        comeinlastnode = comeinfirstnode;
-        gooutfirstnode = initialize();
-        gooutlastnode = gooutfirstnode;
-        getservertable();
-
-
-
+    ui->tableWidget->setColumnCount(4);
+    QStringList m_Header;
+    m_Header<<QString("IP")<<QString("Port")<<QString("Application")<<QString("T/UDP");
+    ui->tableWidget->setHorizontalHeaderLabels(m_Header);
+    ui->tableWidget->setWindowTitle("network analyze");
+    connect(ui->closeButton,SIGNAL(clicked(bool)),this,SLOT(changejudge()));
+    connect(ui->closeButton,SIGNAL(clicked(bool)),this,SLOT(close()));
+    connect(ui->okButton,SIGNAL(clicked(bool)),this,SLOT(touchOkButton()));
+    ui->online->setText(tr("Correct"));
+    ui->normal->setText(tr("Correct"));
+    comeinfirstnode = initialize();
+    comeinlastnode = comeinfirstnode;
+    gooutfirstnode = initialize();
+    gooutlastnode = gooutfirstnode;
+    getservertable();
 for(int i=0;i<1000;i++){
-
-
-        ui->tableWidget->insertRow(i);
-      ui->tableWidget->setItem(i,0,new QTableWidgetItem("0"));
-       ui->tableWidget->setItem(i,1,new QTableWidgetItem("no"));
-       ui->tableWidget->setItem(i,2,new QTableWidgetItem("no"));
-       ui->tableWidget->setItem(i,3,new QTableWidgetItem("no"));
-      ui->tableWidget->horizontalHeader()->sectionResizeMode(QHeaderView::Stretch);
+     ui->tableWidget->insertRow(i);
+     ui->tableWidget->setItem(i,0,new QTableWidgetItem("0"));
+     ui->tableWidget->setItem(i,1,new QTableWidgetItem("no"));
+     ui->tableWidget->setItem(i,2,new QTableWidgetItem("no"));
+     ui->tableWidget->setItem(i,3,new QTableWidgetItem("no"));
+     ui->tableWidget->horizontalHeader()->sectionResizeMode(QHeaderView::Stretch);
 }
 }
 void TableView::changejudge()
 {
-judge=true;
+    judge=true;
 }
-
-
-
  void TableView::touchOkButton()
  {
-
-
 //*****************************************************
-pcap_send_queue* onlinegamequeue=pcap_sendqueue_alloc(numberofqueue);
-pcap_send_queue* nomalqueue=pcap_sendqueue_alloc(numberofqueue);
+    pcap_send_queue* onlinegamequeue=pcap_sendqueue_alloc(numberofqueue);
+    pcap_send_queue* nomalqueue=pcap_sendqueue_alloc(numberofqueue);
 
 //************************************************
-     pcap_if_t *alldevs;
-         pcap_if_t *d;
-         int inum;
-         int i = 0;
-         pcap_t *adhandle;
-         int res;
-         char errbuf[PCAP_ERRBUF_SIZE];
-         struct tm *ltime;
-         char timestr[16];
-         struct pcap_pkthdr *header;
-         const u_char *pkt_data;
-         time_t local_tv_sec;
-         u_int netmask;
-         struct bpf_program fcode;
-         char packet_filter[] = "ip";// "ip and tcp";
-
+    pcap_if_t *alldevs;
+    pcap_if_t *d;
+    int inum;
+    int i = 0;
+    pcap_t *adhandle;
+    int res;
+    char errbuf[PCAP_ERRBUF_SIZE];
+    struct tm *ltime;
+    char timestr[16];
+    struct pcap_pkthdr *header;
+    const u_char *pkt_data;
+    time_t local_tv_sec;
+    u_int netmask;
+    struct bpf_program fcode;
+    char packet_filter[] = "ip";// "ip and tcp";
      //+++++++++++++++initialize the hash map (two)++++++++++++++++++
 /*
          comeinfirstnode = initialize();
@@ -107,42 +88,34 @@ pcap_send_queue* nomalqueue=pcap_sendqueue_alloc(numberofqueue);
          gooutlastnode = gooutfirstnode;*/
          //getservertable();
 //******************************
-         getonlinegameportnumber();
-
-
-         //***************************
-     //+++++++++++++++++++++++++++++++++++++++++++++++++++++
-         /* 获取本机设备列表 */
-         if (pcap_findalldevs_ex(PCAP_SRC_IF_STRING, NULL, &alldevs, errbuf) == -1)
-         {
-         fprintf(stderr, "Error in pcap_findalldevs: %s\n", errbuf);
-             exit(1);
-         }
-
+    getonlinegameportnumber();
+//***************************
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++
+ /* 获取本机设备列表 */
+    if (pcap_findalldevs_ex(PCAP_SRC_IF_STRING, NULL, &alldevs, errbuf) == -1)
+    {
+        fprintf(stderr, "Error in pcap_findalldevs: %s\n", errbuf);
+        exit(1);
+    }
          /* 打印列表 */
-         for (d = alldevs; d; d = d->next)
-         {
-             i++;
-
-         }
-
-         inum = 1;
-
-         if (inum < 1 || inum > i)
-         {
-             printf("\nInterface number out of range.\n");
+    for (d = alldevs; d; d = d->next)
+    {
+        i++;
+    }
+     inum = 1;
+     if (inum < 1 || inum > i)
+     {
+          printf("\nInterface number out of range.\n");
              /* 释放设备列表 */
-             pcap_freealldevs(alldevs);
+          pcap_freealldevs(alldevs);
              //return -1;
-         }
-
+      }
          /* 跳转到已选中的适配器 */
-         for (d = alldevs, i = 0; i< inum - 1; d = d->next, i++);
-
+      for (d = alldevs, i = 0; i< inum - 1; d = d->next, i++);
          /* 打开设备 */
          if ((adhandle = pcap_open(d->name,          // 设备名
              65536,            // 要捕捉的数据包的部分
-                               // 65535保证能捕获到不同数据链路层上的每个数据包的全部内容
+                              // 65535保证能捕获到不同数据链路层上的每个数据包的全部内容
              PCAP_OPENFLAG_PROMISCUOUS,    // 混杂模式
              1000,             // 读取超时时间
              NULL,             // 远程机器验证
@@ -162,7 +135,6 @@ pcap_send_queue* nomalqueue=pcap_sendqueue_alloc(numberofqueue);
          if (pcap_datalink(adhandle) != DLT_EN10MB)
          {
              pcap_freealldevs(alldevs);
-
          }
 
          if (d->addresses != NULL)
@@ -171,15 +143,11 @@ pcap_send_queue* nomalqueue=pcap_sendqueue_alloc(numberofqueue);
          else
              /* 如果接口没有地址，那么我们假设一个C类的掩码 */
              netmask = 0xffffff;
-
-
          //编译过滤器
          if (pcap_compile(adhandle, &fcode, packet_filter, 1, netmask) <0)
          {
-
-             /* 释放设备列表 */
+            /* 释放设备列表 */
              pcap_freealldevs(alldevs);
-
          }
 
          //设置过滤器
@@ -188,36 +156,25 @@ pcap_send_queue* nomalqueue=pcap_sendqueue_alloc(numberofqueue);
              //fprintf(stderr, "\nError setting the filter.\n");
              /* 释放设备列表 */
              pcap_freealldevs(alldevs);
-
          }
 
      //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-
-
          //printf("\nlistening on %s...\n", d->description);
-
          /* 释放设备列表 */
          pcap_freealldevs(alldevs);
-
          /* 获取数据包 */
          int gengxin=0;
-
-
          //pcap_setmode(adhandle, MODE_STAT);//*******************************************
        //bool panduan=true;//******************************************************
          while ((res = pcap_next_ex(adhandle, &header, &pkt_data)) >= 0) {
-
              //++++
              if(judge)
              {break;
              }
-
              if (res == 0)
                  /* 超时时间到 */
                  continue;
-
-
      //*******************************************************************************************
              //**************************************************************************************
              //to calculate the bandwith
@@ -240,31 +197,13 @@ pcap_send_queue* nomalqueue=pcap_sendqueue_alloc(numberofqueue);
           // panduan=false;
 
              //}
-
-
 }
-
-
-
-
-
-
-
-
-
           //********************************************************************************************
              //*******************************************************************************************
-
-
-
-
-
-
              /* 将时间戳转换成可识别的格式 */
              local_tv_sec = header->ts.tv_sec;
              ltime = localtime(&local_tv_sec);
              strftime(timestr, sizeof timestr, "%H:%M:%S", ltime);
-
              //printf("%s,%.6d len:%d\n", timestr, header->ts.tv_usec, header->len);
              //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
               char originalmac[length] = "";//added in task 3
@@ -277,31 +216,21 @@ pcap_send_queue* nomalqueue=pcap_sendqueue_alloc(numberofqueue);
                    if (strlen(shoulu)==1)
                    {
                         char a[3] = "0";
-
                        strcpy(shoulu, strcat(a, shoulu));
-
                    }
-
-
                  if (i==11)
                  {
                      strcat(originalmac, shoulu);
                  }
                  else
                  {
-
                      strcat(originalmac, shoulu);
                      strcat(originalmac, ":");
                  }
-
              }
          //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
              int payload = pcap_snapshot(adhandle);
-             //printf("payload is %d bytes\n", payload);
-     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
              char sourceip[length] = "";
-
              for (int i = 26; i < 30; i++)
              {
                  char shoulu[20] = "";
@@ -323,7 +252,6 @@ pcap_send_queue* nomalqueue=pcap_sendqueue_alloc(numberofqueue);
      //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
              char destinationip[length] = "";
-
              for (int i = 30; i < 34; i++)
              {
                  char shoulu[20] = "";
@@ -363,29 +291,19 @@ pcap_send_queue* nomalqueue=pcap_sendqueue_alloc(numberofqueue);
                  {
                      if(pcap_sendqueue_queue(onlinegamequeue,header,pkt_data)==-1)
                          ui->online->setText(tr("buffer small"));
-
-
                  }
 
                  if(searchonlinegameport(destinationport)==-1)
                  {
-
                     if(pcap_sendqueue_queue(nomalqueue,header,pkt_data)==-1)
-                            ui->normal->setText(tr("buffer small"));
-
-
+                         ui->normal->setText(tr("buffer small"));
                  }
 
                  //******************************************************
-
-
              }
-
      //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
             // showmap(gooutfirstnode);
              node* head=gooutfirstnode;
-
              int countnumber=0;
 
 while(head->next!=NULL){
@@ -394,43 +312,20 @@ while(head->next!=NULL){
            char pn[length];
            itoa(head->portnumber,pn,10);
            ui->tableWidget->item(countnumber,1)->setText(tr(pn));
-            ui->tableWidget->item(countnumber,2)->setText(tr(head->application));
-             ui->tableWidget->item(countnumber,3)->setText(tr(head->transitionprotocal));
-
-
-            head=head->next;
-            countnumber++;
+           ui->tableWidget->item(countnumber,2)->setText(tr(head->application));
+           ui->tableWidget->item(countnumber,3)->setText(tr(head->transitionprotocal));
+           head=head->next;
+           countnumber++;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 QTime t;
 t.start();
 while (t.elapsed()<30) {
-
     QCoreApplication::processEvents();
-
 }
-
-
-
-
-     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
          }//dui ying qian mian de while
-
          //return 0;
-
  }
 
 //**********************************************
