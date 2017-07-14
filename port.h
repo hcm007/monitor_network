@@ -9,13 +9,11 @@
 #include"hashmap.h"
 #include <math.h>
 #define length_file 60// in order to read the file
-
 struct portserve
 {
     int port;
     char serve[length];
     struct portserve* next;
-
 };
 
 typedef struct portserve servertable;
@@ -25,11 +23,7 @@ servertable* lastservertablenode;
 //*********************************************************
 servertable* onlinegamefirstnode;
 servertable* onlinegamelastnode;
-
 //**********************************************************
-
-
-
 servertable* init()
 {
     servertable* node=(servertable*) malloc(sizeof(servertable));
@@ -39,16 +33,11 @@ servertable* init()
     return node;
 };
 
-
-
 void insertable(servertable* node)
 {
-
     lastservertablenode->next=node;
     lastservertablenode=node;
-
 };
-
 
 void insertable_1(int port,char* ser)
 {
@@ -59,11 +48,7 @@ void insertable_1(int port,char* ser)
     insertable(node);
 }
 
-
-
-
 //**********************************************************
-
 
 void getonlinegameportnumber()
 {
@@ -127,29 +112,13 @@ void getonlinegameportnumber()
         //number and application_file is useful
         //printf("%s", StrLine); //输出
         servertable* node = init();
-
-
         node->port = number;
         strcpy(node->serve, application_file);
         node->next = NULL;
         onlinegamelastnode->next = node;
         onlinegamelastnode = node;
-
-
-
     }//respond to the while(big one)
-
-
-
-
-
-
-
 };
-
-
-
-
 //**********************************************************
 //retrun 0 represent find it in onlinegameport return -1 represent didnot find it
 
@@ -159,67 +128,17 @@ int searchonlinegameport(int port_x)
     servertable* headofonlinegameport=onlinegamefirstnode;
     while(headofonlinegameport->next!=NULL)
     {
-
         if(headofonlinegameport->port==port_x)
         {
             findit=0;
             break;
         }
-
       headofonlinegameport=headofonlinegameport->next;
     }
-
     return findit;
-
-
 };
 //**********************************************************
-
-
-
 //******************************************************
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 void getservertable()
@@ -235,86 +154,54 @@ void getservertable()
     char *filename= "C:\\Users\\Administrator\\Desktop\\QTproject\\TableView\\portnumber.txt";
 	if ((portnumber_file = fopen(filename, "r+")))
 	{
-		printf("chenggongla\n");
+	    printf("chenggongla\n");
 	}
 	else
 	{
-		printf("buxing\n");
-
+	    printf("buxing\n");
 	}
 	char StrLine[length_file];
 	while (!feof(portnumber_file))
 	{
 		//++++++++read the port number++++++++++++++++++++++++++++++++++++++++++++
-		fgets(StrLine, length_file, portnumber_file);  //读取一行
-		char space = ' ';
-		int i = 0;
-		int number = 0;
-		while ((StrLine[i] != space) && (StrLine[i] != '\t'))
+	    fgets(StrLine, length_file, portnumber_file);  //读取一行
+	    char space = ' ';
+	    int i = 0;
+	    int number = 0;
+	    while ((StrLine[i] != space) && (StrLine[i] != '\t'))
 		{
-			i++;
-
+		    i++;
 		}
-		//printf("%d   ", i);
-		for (int j = 0; j < i; j++)
-		{
-			int record = StrLine[j];
-			record = record - 48;
-
-			number += record*pow(10, i-j-1);
-			
+	//printf("%d   ", i);
+	    for (int j = 0; j < i; j++)
+	    {
+		int record = StrLine[j];
+		record = record - 48;
+		number += record*pow(10, i-j-1);
 		}
-
-		//printf("%d      ", number);
-
-
-		//printf("     ");
-
-		//+++++++++++++ the port number ++++++++++++++++++++++++++++++++++++++++++
-		char nextline = '\n';
-		int count = i;
-		while (((StrLine[count] != nextline) && ((StrLine[count] != space)))) {
-
-			count++;
-
+	//printf("%d      ", number);
+	//printf("     ");
+	//+++++++++++++ the port number ++++++++++++++++++++++++++++++++++++++++++
+	    char nextline = '\n';
+	    int count = i;
+	    while (((StrLine[count] != nextline) && ((StrLine[count] != space)))) {
+		count++;
 		}
-
-		char application_file[length] = "";
-
-		for (int k = i + 1; k<count; k++) {
-			application_file[k - i - 1] = StrLine[k];
-
+	    char application_file[length] = "";
+	    for (int k = i + 1; k<count; k++) {
+		application_file[k - i - 1] = StrLine[k];
 		}
-		//printf("%s    ", application_file);
-		//number and application_file is useful
-		//printf("%s", StrLine); //输出
-		servertable* node = init();
-
-
-		node->port=number;
-		strcpy(node->serve,application_file);
-		node->next = NULL;
-		insertable(node);
-
-
-
-	}//respond to the while(big one)
-	 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-   /*
+	    //printf("%s    ", application_file);
+	    //number and application_file is useful
+	    //printf("%s", StrLine); //输出
+	    servertable* node = init();
+	    node->port=number;
+	    strcpy(node->serve,application_file);
+	    node->next = NULL;
+	    insertable(node);
+	    }//respond to the while(big one)
+	 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
+/*
     for (int i=0; i<11; i++) {
         
         servertable* node=init();
@@ -324,9 +211,7 @@ void getservertable()
         insertable(node);
     
     }
-   */
-
-
+ */
 };
 
 void showservertable()
@@ -337,15 +222,12 @@ void showservertable()
         if (head->next==NULL) {
             break;
         }
-        head=head->next;
-        
+        head=head->next;     
     } while (1);
 
 }
-
 char* searchserviceport(int port)
 {
-
     servertable* head=firstservertablenode;
     char serveport[length]="NO";
     while (1)
@@ -354,46 +236,28 @@ char* searchserviceport(int port)
             strcpy(serveport, head->serve);
             break;
         }
-		if (head->next==NULL)
-		{
-			break;
-		}
+	if (head->next==NULL)
+	{
+	    break;
+	}
         head=head->next;
         
     };
-
-
     //printf("the serve port is %s\n",serveport);
-
-	return serveport;
-
-
+    return serveport;
 }
-
-
 void showmap(node* first)
 {
-	node* head = first;
-
-	do {
-
-		strcpy(head->application,searchserviceport(head->portnumber));//add port cotent
-
-
-
-
-		printf("ip: %s        port:%d     application:%s  transitinprotocal:%s \n", head->ipaddress, head->portnumber,head->application,head->transitionprotocal);
-		int average = head->count / head->timenumber;
-		//printf("average  payload:%d\n", average);
-		
-		if (head->next == NULL) {
-			break;
-		}
-		head = head->next;
-
+    node* head = first;
+    do {
+	strcpy(head->application,searchserviceport(head->portnumber));//add port cotent
+	printf("ip: %s        port:%d     application:%s  transitinprotocal:%s \n", head->ipaddress, head->portnumber,head->application,head->transitionprotocal);
+	int average = head->count / head->timenumber;
+	//printf("average  payload:%d\n", average);	
+	if (head->next == NULL) {
+	    break;
+	}
+	head = head->next;
 	} while (1);
-
-
-
 };
 
